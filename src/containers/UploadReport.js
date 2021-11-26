@@ -29,7 +29,7 @@ export default function UploadReport() {
         setIsUploading(true);
         const file = myFiles[0];
         const myHeaders = new Headers();
-        const API_GOES_HERE = 'iskns8hh2e.execute-api.us-east-1.amazonaws.com/v2/reportupload';
+        const API_GOES_HERE = '';
         myHeaders.append("Content-Type", "application/octet-stream");
         fetch(`https://${API_GOES_HERE}?name=${file.name.replaceAll(' ', '_')}`, {
             body: file,
