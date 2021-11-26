@@ -59,10 +59,14 @@ export default function UploadReport() {
                             <p>Drag 'n' drop some files here, or click to select files</p>
                     }
                 </div>
-                <aside>
-                    <h4>Files</h4>
-                    <ul>{files}</ul>
-                </aside>
+                <br />
+                {
+                    myFiles.length > 0 ? <aside>
+                        <h4>Files</h4>
+                        <ul>{files}</ul>
+                    </aside> : null
+                }
+
                 <Row>
                     <Col md={2}>
                         <LoaderButton
