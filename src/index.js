@@ -3,19 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 
 Amplify.configure(awsconfig);
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Router>
-          <App />
-      </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Router>
+        <App/>
+    </Router>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
