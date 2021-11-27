@@ -1,21 +1,22 @@
-import React, {useState} from "react";
+import React from "react";
 import {FormControl, InputAdornment, TextField, Typography} from "@mui/material";
 import {Container} from "@material-ui/core";
 import {Col, Row} from "react-bootstrap";
 import EditIcon from '@material-ui/icons/Edit';
+import {useAppContext} from "../lib/contextLib";
 
 export default function Profile() {
-    const [values, setValues] = useState({
-        amount: '',
-        password: '',
-        weight: '',
-        weightRange: '',
-        showPassword: false,
-    });
+    // const [values, setValues] = useState({
+    //     weight: '',
+    //     weightRange: '',
+    //     showPassword: false,
+    // });
 
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
+    // const handleChange = (prop) => (event) => {
+    //     setValues({ ...values, [prop]: event.target.value });
+    // };
+
+    const { userDetails } = useAppContext();
 
     return (
         <Container maxWidth="xs">
@@ -34,8 +35,8 @@ export default function Profile() {
                            style={{paddingBottom: '10px'}}/>
                 <TextField size="small" id="outlined-basic" label="Gender" variant="outlined"
                            style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="outlined-basic" label="Email" variant="outlined"
-                           style={{paddingBottom: '10px'}}/>
+                <TextField size="small" id="outlined-basic" label="Email" variant="outlined" disabled
+                           style={{paddingBottom: '10px'}} value={userDetails.attributes.email}/>
                 <TextField size="small" id="outlined-basic" label="Phone Number" variant="outlined"
                            style={{paddingBottom: '10px'}}/>
                 <TextField size="small" id="outlined-basic" label="Area Code" variant="outlined"
