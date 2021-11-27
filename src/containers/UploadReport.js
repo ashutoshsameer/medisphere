@@ -2,11 +2,10 @@ import React, {useCallback, useState} from "react";
 import {useDropzone} from 'react-dropzone';
 import './UploadReport.css';
 import LoaderButton from "../components/LoaderButton";
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import Toast from 'react-bootstrap/Toast';
 import {Col, Row} from "react-bootstrap";
 import FormSelect from "react-bootstrap/FormSelect";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import {Snackbar} from "@material-ui/core";
 
 export default function UploadReport() {
     const [myFiles, setMyFiles] = useState([]);
@@ -58,6 +57,15 @@ export default function UploadReport() {
 
     return (
         <div>
+            <Snackbar
+                autoHideDuration={3000}
+                anchorOrigin={{ vertical: 'top',
+                    horizontal: 'right'}}
+                open={show}
+                onClose={() => setShow(false)}
+                message="File Uploaded Successfully"
+                key={'topright'}
+            />
             <section className="container">
                 <Col md={4}>
                     <FloatingLabel controlId="floatingSelect" label="Report Type">
@@ -96,13 +104,6 @@ export default function UploadReport() {
                         >
                             Upload
                         </LoaderButton>
-                    </Col>
-                    <Col md={10}>
-                        <ToastContainer position="top-end">
-                            <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-                                <Toast.Body>File Successfully Uploaded</Toast.Body>
-                            </Toast>
-                        </ToastContainer>
                     </Col>
                 </Row>
             </section>
