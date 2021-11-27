@@ -5,9 +5,12 @@ import LoaderButton from "../components/LoaderButton";
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import {Col, Row} from "react-bootstrap";
+import FormSelect from "react-bootstrap/FormSelect";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 export default function UploadReport() {
     const [myFiles, setMyFiles] = useState([]);
+    const [reportType, setReportType] = useState(1);
 
     const onDrop = useCallback(acceptedFiles => {
         setMyFiles([...myFiles, ...acceptedFiles])
@@ -48,9 +51,25 @@ export default function UploadReport() {
         return myFiles.length > 0;
     }
 
+    function handleReportTypeChange(event) {
+        setReportType(event.target.value);
+        console.log(reportType);
+    }
+
     return (
-        <>
+        <div>
             <section className="container">
+                <Col md={4}>
+                    <FloatingLabel controlId="floatingSelect" label="Report Type">
+                        <FormSelect aria-label="Floating label select example" onChange={handleReportTypeChange}>
+                            <option disabled>Select</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </FormSelect>
+                    </FloatingLabel>
+                </Col>
+                <br/>
                 <div {...getRootProps({className: 'dropzone'})}>
                     <input {...getInputProps()} />
                     {
@@ -59,7 +78,7 @@ export default function UploadReport() {
                             <p>Drag 'n' drop some files here, or click to select files</p>
                     }
                 </div>
-                <br />
+                <br/>
                 {
                     myFiles.length > 0 ? <aside>
                         <h4>Files</h4>
@@ -87,6 +106,6 @@ export default function UploadReport() {
                     </Col>
                 </Row>
             </section>
-        </>
+        </div>
     )
 }
