@@ -1,22 +1,21 @@
-import React from "react";
-import {FormControl, InputAdornment, TextField, Typography} from "@mui/material";
+import React, {useState} from "react";
+import {FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {Container} from "@material-ui/core";
 import {Col, Row} from "react-bootstrap";
 import EditIcon from '@material-ui/icons/Edit';
 import {useAppContext} from "../lib/contextLib";
 
 export default function Profile() {
-    // const [values, setValues] = useState({
-    //     weight: '',
-    //     weightRange: '',
-    //     showPassword: false,
-    // });
+    const [values, setValues] = useState({
+        weight: '',
+        age: ''
+    });
 
-    // const handleChange = (prop) => (event) => {
-    //     setValues({ ...values, [prop]: event.target.value });
-    // };
+    const handleChange = (prop) => (event) => {
+        setValues({...values, [prop]: event.target.value});
+    };
 
-    const { userDetails } = useAppContext();
+    const {userDetails} = useAppContext();
 
     return (
         <Container maxWidth="xs">
@@ -33,8 +32,20 @@ export default function Profile() {
                            style={{paddingBottom: '10px'}}/>
                 <TextField size="small" id="outlined-basic" label="Last Name" variant="outlined"
                            style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="outlined-basic" label="Gender" variant="outlined"
-                           style={{paddingBottom: '10px'}}/>
+                <FormControl fullWidth size={'small'} style={{paddingBottom: '10px'}}>
+                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={values.age}
+                        label="Age"
+                        onChange={handleChange('age')}
+                    >
+                        <MenuItem value='m'>Male</MenuItem>
+                        <MenuItem value='f'>Female</MenuItem>
+                        <MenuItem value='o'>Other</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField size="small" id="outlined-basic" label="Email" variant="outlined" disabled
                            style={{paddingBottom: '10px'}} value={userDetails.attributes.email}/>
                 <TextField size="small" id="outlined-basic" label="Phone Number" variant="outlined"
