@@ -30,8 +30,8 @@ export default function Login() {
         try {
             await Auth.signIn(fields.email, fields.password);
             const userDetails = await Auth.currentUserInfo();
-            userHasAuthenticated(true);
             setUserDetails(userDetails);
+            userHasAuthenticated(true);
         } catch (e) {
             onError(e);
             setIsLoading(false);
@@ -62,7 +62,7 @@ export default function Login() {
                     <Link to="/login/reset">Forgot password?</Link>
                     <LoaderButton
                         block
-                        size="lg"
+                        size="md"
                         type="submit"
                         isLoading={isLoading}
                         disabled={!validateForm()}

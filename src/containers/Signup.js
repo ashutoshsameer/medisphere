@@ -58,8 +58,8 @@ export default function Signup() {
             await Auth.signIn(fields.email, fields.password);
 
             const userDetails = await Auth.currentUserInfo();
-            userHasAuthenticated(true);
             setUserDetails(userDetails);
+            userHasAuthenticated(true);
         } catch (e) {
             onError(e);
             setIsLoading(false);
@@ -122,8 +122,9 @@ export default function Signup() {
                     />
                 </Form.Group>
                 <LoaderButton
+                    style={{marginTop: '10px'}}
                     block
-                    size="lg"
+                    size="md"
                     type="submit"
                     variant="success"
                     isLoading={isLoading}

@@ -82,9 +82,10 @@ export default function ResetPassword() {
                     />
                 </FormGroup>
                 <LoaderButton
+                    style={{marginTop: '10px'}}
                     block
                     type="submit"
-                    bsSize="large"
+                    bsSize="medium"
                     isLoading={isSendingCode}
                     disabled={!validateCodeForm()}
                 >
@@ -127,9 +128,10 @@ export default function ResetPassword() {
                     />
                 </FormGroup>
                 <LoaderButton
+                    style={{marginTop: '10px'}}
                     block
                     type="submit"
-                    bsSize="large"
+                    bsSize="medium"
                     isLoading={isConfirming}
                     disabled={!validateResetForm()}
                 >
