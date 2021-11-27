@@ -28,7 +28,6 @@ export default function ReportHistory() {
     }));
 
     const groupedFiles = groupBy(transformedFiles, 'dateUploaded');
-    console.log(groupedFiles);
 
     function download(fileUrl, fileName) {
         const a = document.createElement("a");
