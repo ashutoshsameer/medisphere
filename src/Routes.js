@@ -12,6 +12,7 @@ import ResetPassword from "./containers/ResetPassword";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import Profile from "./containers/Profile";
+import AilmentTrack from "./containers/AilmentTrack";
 
 export default function Routes() {
     return (
@@ -43,6 +44,7 @@ export default function Routes() {
             <UnauthenticatedRoute exact path="/login/reset">
                 <ResetPassword />
             </UnauthenticatedRoute>
+            <AuthenticatedRoute exact path="/ailments/:name" component={AilmentTrack} />
             {/* Finally, catch all unmatched routes */}
             <Route>
                 <NotFound />

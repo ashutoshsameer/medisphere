@@ -12,7 +12,7 @@ export default function DoctorSearch() {
             </Row>
             <Row xs={1} md={3} className="g-4">
                 {Array.from({length: 4}).map((_, idx) => (
-                    <Col>
+                    <Col key={`result_${idx}`}>
                         <Card style={{marginTop: '15px'}}>
                             {/*<Card.Img variant="top" src="holder.js/100px160" />*/}
                             <Card.Body>
