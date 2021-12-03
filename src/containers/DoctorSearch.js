@@ -1,5 +1,6 @@
 import React from "react";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
+import {Button} from "@mui/material";
 
 export default function DoctorSearch() {
     return (
