@@ -61,7 +61,7 @@ export default function Login() {
                     </Form.Group>
                     <Link to="/login/reset">Forgot password?</Link>
                     <LoaderButton
-                        block
+                        variant="primary"
                         size="md"
                         type="submit"
                         isLoading={isLoading}

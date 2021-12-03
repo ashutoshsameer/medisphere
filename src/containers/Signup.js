@@ -80,7 +80,6 @@ export default function Signup() {
                     <Form.Text muted>Please check your email for the code.</Form.Text>
                 </Form.Group>
                 <LoaderButton
-                    block
                     size="lg"
                     type="submit"
                     variant="success"
@@ -123,7 +122,6 @@ export default function Signup() {
                 </Form.Group>
                 <LoaderButton
                     style={{marginTop: '10px'}}
-                    block
                     size="md"
                     type="submit"
                     variant="success"

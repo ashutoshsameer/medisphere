@@ -3,13 +3,13 @@ import {useDropzone} from 'react-dropzone';
 import './UploadReport.css';
 import LoaderButton from "../components/LoaderButton";
 import {Col, Row} from "react-bootstrap";
-import FormSelect from "react-bootstrap/FormSelect";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import {Snackbar} from "@material-ui/core";
+import {Box, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {useAppContext} from "../lib/contextLib";
 
 export default function UploadReport() {
     const [myFiles, setMyFiles] = useState([]);
-    const [reportType, setReportType] = useState(1);
+    const [reportType, setReportType] = useState('');
 
     const onDrop = useCallback(acceptedFiles => {
         setMyFiles([...myFiles, ...acceptedFiles])
@@ -25,7 +25,41 @@ export default function UploadReport() {
         </li>
     ));
 
+    const reportTypes = [
+        {
+            label: 'X Ray',
+            value: 1
+        },
+        {
+            label: 'MRI',
+            value: 2
+        },
+        {
+            label: 'PET Scan',
+            value: 3
+        },
+        {
+            label: 'CT Scan',
+            value: 4
+        },
+        {
+            label: 'Ultrasound',
+            value: 5
+        },
+        {
+            label: 'Blood Test',
+            value: 6
+        },
+        {
+            label: 'Other',
+            value: 7
+        },
+    ];
+
+    const { userDetails } = useAppContext();
+
     function handleUpload(event) {
+        console.log(userDetails.username);
         event.preventDefault();
 
         setIsUploading(true);
@@ -47,20 +81,21 @@ export default function UploadReport() {
     }
 
     function validateForm() {
-        return myFiles.length > 0;
+        return myFiles.length > 0 && reportType !== '';
     }
 
     function handleReportTypeChange(event) {
         setReportType(event.target.value);
-        console.log(reportType);
     }
 
     return (
         <div>
             <Snackbar
                 autoHideDuration={3000}
-                anchorOrigin={{ vertical: 'top',
-                    horizontal: 'right'}}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
                 open={show}
                 onClose={() => setShow(false)}
                 message="File Uploaded Successfully"
@@ -68,14 +103,24 @@ export default function UploadReport() {
             />
             <section className="container">
                 <Col md={4}>
-                    <FloatingLabel controlId="floatingSelect" label="Report Type">
-                        <FormSelect aria-label="Floating label select example" onChange={handleReportTypeChange}>
-                            <option disabled>Select</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </FormSelect>
-                    </FloatingLabel>
+                    <Box sx={{minWidth: 120}}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Report Type</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={reportType}
+                                label="Report Type"
+                                onChange={handleReportTypeChange}
+                            >
+                                {
+                                    reportTypes.map((type, idx) => (
+                                        <MenuItem value={type.value} key={`report_type_${idx}`}>{type.label}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </Col>
                 <br/>
                 <div {...getRootProps({className: 'dropzone'})}>

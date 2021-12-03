@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import {useHistory} from "react-router-dom";
+import {Box, Grid} from "@mui/material";
 
 export default function MyAilments() {
     const history = useHistory();
@@ -23,25 +24,29 @@ export default function MyAilments() {
     }
 
     return (
-        <div>
+        <Grid container spacing={4}>
             {ailments.map((ail, index) => (
-                <Card sx={{maxWidth: 275}} raised key={`ailment_${index}`}>
-                    <CardContent>
-                        <Typography variant="h5" component="div">
-                            {ail.name}
-                        </Typography>
-                        <br/>
-                        <Typography variant="body2" color="text.secondary">
-                            added on
+                <Grid item xs={12} md={4} key={`ailment_${index}`}>
+                    <Card raised>
+                        <CardContent>
+                            <Box sx={{textAlign: 'center'}}>
+                                <Typography variant="h5" component="div">
+                                    {ail.name}
+                                </Typography>
+                            </Box>
                             <br/>
-                            {ail.otherData.addedOn}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small" onClick={() => trackAilment(ail.name)}>Track</Button>
-                    </CardActions>
-                </Card>
+                            <Typography variant="body2" color="text.secondary">
+                                added on
+                                <br/>
+                                {ail.otherData.addedOn}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small" onClick={() => trackAilment(ail.name)}>Track</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
             ))}
-        </div>
+        </Grid>
     );
 }
