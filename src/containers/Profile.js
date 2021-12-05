@@ -62,10 +62,10 @@ export default function Profile() {
     return (
         <Container maxWidth="xs">
             <Row>
-                <Col md={6}>
+                <Col md={6} xs={6}>
                     <Typography color="text.secondary" style={{padding: '10px'}}>About You</Typography>
                 </Col>
-                <Col md={{span: 6, offset: 0}} style={{padding: '10px'}}>
+                <Col md={{span: 6, offset: 0}} style={{padding: '10px'}} xs={6}>
                     <EditIcon id="edit1" style={{float: 'right', cursor: 'pointer'}} onClick={() => handleClick("edit1", "save1", clicked1, setClicked1)}/>
                     <SaveIcon id="save1" style={{float: 'right', cursor: 'pointer', visibility: 'hidden'}} onClick={() => handleClick("edit1", "save1", clicked1, setClicked1)}/>
                 </Col>
@@ -99,33 +99,33 @@ export default function Profile() {
             <br/>
             <br/>
             <Row>
-                <Col md={6}>
+                <Col md={6} xs={6}>
                     <Typography color="text.secondary" style={{padding: '10px'}}>Personal Details</Typography>
                 </Col>
-                <Col md={{span: 6, offset: 0}} style={{padding: '10px'}}>
+                <Col md={{span: 6, offset: 0}} style={{padding: '10px'}} xs={6}>
                     <EditIcon id="edit2" style={{float: 'right', cursor: 'pointer'}} onClick={() => handleClick("edit2", "save2", clicked2, setClicked2)}/>
                     <SaveIcon id="save2" style={{float: 'right', cursor: 'pointer', visibility: 'hidden'}} onClick={() => handleClick("edit2", "save2", clicked2, setClicked2)}/>
                 </Col>
             </Row>
             <FormControl sx={{width: '100%'}}>
                 <Row>
-                    <Col md={6}>
+                    <Col md={6} xs={6}>
                         <TextField size="small" id="outlined-basic" label="Date of Birth" variant="outlined"
                                    style={{paddingBottom: '10px'}}/>
                     </Col>
-                    <Col md={6}>
+                    <Col md={6} xs={6}>
                         <TextField size="small" id="outlined-basic" label="Blood Type" variant="outlined"
                                    style={{paddingBottom: '10px'}}/>
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={6}>
+                    <Col md={6} xs={6}>
                         <TextField size="small" id="outlined-basic" label="Height" variant="outlined"
                                    style={{paddingBottom: '10px'}} InputProps={{
                             endAdornment: <InputAdornment position="end">cm</InputAdornment>,
                         }}/>
                     </Col>
-                    <Col md={6}>
+                    <Col md={6} xs={6}>
                         <TextField size="small" id="outlined-basic" label="Weight" variant="outlined"
                                    style={{paddingBottom: '10px'}} InputProps={{
                             endAdornment: <InputAdornment position="end">kg</InputAdornment>,
