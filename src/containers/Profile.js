@@ -9,8 +9,36 @@ import SaveIcon from '@material-ui/icons/Save';
 export default function Profile() {
     const [clicked1, setClicked1] = useState(false)
     const [clicked2, setClicked2] = useState(false)
+    const [clicked3, setClicked3] = useState(false)
+
+    const [profile, setProfile] = useState({});
 
     const {userDetails} = useAppContext();
+    const [flag, setFlag] = useState(false)
+
+    if(!flag) {
+        getProfile();
+        setFlag(true);
+    }
+    
+    async function getProfile() {
+        const headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
+        fetch('https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/profile?id='+userDetails.username,
+        {
+            method: 'GET',
+            headers: headers
+        })
+        .then(data=>data.json())
+        .then(data=>{
+            console.log(data)
+            document.getElementById('first_name').value = data['first_name']
+            document.getElementById('last_name').value = data['last_name']
+            document.getElementById('gender').value = data['gender']
+            document.getElementById('phone').value = data['phone']
+            document.getElementById('area_code').value = data['area_code']
+            setProfile(data)
+        });
+    }
 
     async function awsCall(body) {
         const headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
@@ -31,18 +59,22 @@ export default function Profile() {
             document.getElementById(id1).style.visibility="visible";
             document.getElementById(id2).style.visibility="hidden";
             setClicked(false)
-            if (id1 === "edit1") {
-                var body={}
-                body['first_name'] = document.getElementById('first_name').value
-                body['last_name'] = document.getElementById('last_name').value
-                body['gender'] = document.getElementById('gender').value
-                body['email'] = document.getElementById('email').value
-                body['phone'] = document.getElementById('phone').value
-                body['area_code'] = document.getElementById('area_code').value
-                body['id'] = userDetails.username
-                console.log(body)
-                awsCall(body)
-            }
+            var body={}
+            body['first_name'] = document.getElementById('first_name').value
+            body['last_name'] = document.getElementById('last_name').value
+            body['gender'] = document.getElementById('gender').value
+            body['email'] = document.getElementById('email').value
+            body['phone'] = document.getElementById('phone').value
+            body['area_code'] = document.getElementById('area_code').value
+            body['id'] = userDetails.username
+            body['dob'] = document.getElementById('dob').value
+            body['height'] = document.getElementById('height').value
+            body['weight'] = document.getElementById('weight').value
+            body['blood_type'] = document.getElementById('blood_type').value
+            body['ailments'] = document.getElementById('ailments').value
+            body['med'] = document.getElementById('med').value
+            console.log(body)
+            awsCall(body)
         } else {
             document.getElementById(id1).style.visibility="hidden";
             document.getElementById(id2).style.visibility="visible";
@@ -71,9 +103,9 @@ export default function Profile() {
                 </Col>
             </Row>
             <FormControl sx={{width: '100%'}}>
-                <TextField size="small" id="first_name" label="First Name" variant="outlined"
+                <TextField size="small" id="first_name" label="First Name" variant="outlined" disabled
                            style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="last_name" label="Last Name" variant="outlined"
+                <TextField size="small" id="last_name" label="Last Name" variant="outlined" disabled
                            style={{paddingBottom: '10px'}}/>
                 <FormControl fullWidth size={'small'} style={{paddingBottom: '10px'}}>
                     <InputLabel id="gender">Gender</InputLabel>
@@ -91,9 +123,9 @@ export default function Profile() {
                 </FormControl>
                 <TextField size="small" id="email" label="Email" variant="outlined" disabled
                            style={{paddingBottom: '10px'}} value={userDetails.attributes.email}/>
-                <TextField size="small" id="phone" label="Phone Number" variant="outlined"
-                           style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="area_code" label="Area Code" variant="outlined"
+                <TextField size="small" id="phone" label="Phone Number" variant="outlined" disabled
+                           style={{paddingBottom: '10px'}} value="123"/>
+                <TextField size="small" id="area_code" label="Area Code" variant="outlined" disabled
                            style={{paddingBottom: '10px'}}/>
             </FormControl>
             <br/>
@@ -110,23 +142,23 @@ export default function Profile() {
             <FormControl sx={{width: '100%'}}>
                 <Row>
                     <Col md={6}>
-                        <TextField size="small" id="outlined-basic" label="Date of Birth" variant="outlined"
+                        <TextField size="small" id="dob" label="Date of Birth" variant="outlined"
                                    style={{paddingBottom: '10px'}}/>
                     </Col>
                     <Col md={6}>
-                        <TextField size="small" id="outlined-basic" label="Blood Type" variant="outlined"
+                        <TextField size="small" id="blood_type" label="Blood Type" variant="outlined"
                                    style={{paddingBottom: '10px'}}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <TextField size="small" id="outlined-basic" label="Height" variant="outlined"
+                        <TextField size="small" id="height" label="Height" variant="outlined"
                                    style={{paddingBottom: '10px'}} InputProps={{
                             endAdornment: <InputAdornment position="end">cm</InputAdornment>,
                         }}/>
                     </Col>
                     <Col md={6}>
-                        <TextField size="small" id="outlined-basic" label="Weight" variant="outlined"
+                        <TextField size="small" id="weight" label="Weight" variant="outlined"
                                    style={{paddingBottom: '10px'}} InputProps={{
                             endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                         }}/>
@@ -140,11 +172,15 @@ export default function Profile() {
                 <Col md={6}>
                     <Typography color="text.secondary" style={{padding: '10px'}}>Health History</Typography>
                 </Col>
+                <Col md={{span: 6, offset: 0}} style={{padding: '10px'}}>
+                    <EditIcon id="edit3" style={{float: 'right', cursor: 'pointer'}} onClick={() => handleClick("edit3", "save3", clicked3, setClicked3)}/>
+                    <SaveIcon id="save3" style={{float: 'right', cursor: 'pointer', visibility: 'hidden'}} onClick={() => handleClick("edit3", "save3", clicked3, setClicked3)}/>
+                </Col>
             </Row>
             <FormControl sx={{width: '100%'}}>
-                <TextField size="small" id="outlined-basic" label="Ailments" variant="outlined"
+                <TextField size="small" id="ailments" label="Ailments" variant="outlined"
                            style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="outlined-basic" label="Medication" variant="outlined"
+                <TextField size="small" id="med" label="Medication" variant="outlined"
                            style={{paddingBottom: '10px'}}/>
             </FormControl>
 
