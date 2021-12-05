@@ -75,7 +75,7 @@ export default function AilmentTrack(props) {
             </Row>
             <br/>
             {
-                data.length > 0 ? <LineChart data={data} width={400} height={300}/> : <p>No data Points</p>
+                data.length > 0 ? <LineChart data={data} width={400} height={300}/> : <p>No data Points in the specified range</p>
             }
         </div>
     );

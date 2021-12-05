@@ -1,43 +1,29 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
-import {Container} from "@material-ui/core";
+import {Container, Snackbar} from "@material-ui/core";
 import {Col, Row} from "react-bootstrap";
 import EditIcon from '@material-ui/icons/Edit';
 import {useAppContext} from "../lib/contextLib";
 import SaveIcon from '@material-ui/icons/Save';
 
 export default function Profile() {
-    const [clicked1, setClicked1] = useState(false)
-    const [clicked2, setClicked2] = useState(false)
-
-    const [profile, setProfile] = useState({});
+    const [clicked1, setClicked1] = useState(false);
+    const [clicked2, setClicked2] = useState(false);
 
     const {userDetails} = useAppContext();
-    const [flag, setFlag] = useState(false)
 
-    if(!flag) {
-        getProfile();
-        setFlag(true);
-    }
-    
-    async function getProfile() {
-        const headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
-        fetch('https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/profile?id='+userDetails.username,
-        {
-            method: 'GET',
-            headers: headers
-        })
-        .then(data=>data.json())
-        .then(data=>{
-            console.log(data)
-            document.getElementById('first_name').value = data['first_name']
-            document.getElementById('last_name').value = data['last_name']
-            document.getElementById('gender').value = data['gender']
-            document.getElementById('phone').value = data['phone']
-            document.getElementById('area_code').value = data['area_code']
-            setProfile(data)
-        });
-    }
+    useEffect(() => {
+        const headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
+        fetch('https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/profile?id=' + userDetails.username,
+            {
+                method: 'GET',
+                headers: headers
+            })
+            .then(data => data.json())
+            .then(data => {
+                setValues(data);
+            });
+    }, [userDetails.username]);
 
     async function awsCall(body) {
         const headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
@@ -49,7 +35,11 @@ export default function Profile() {
             })
             .then(data => data.json())
             .then(data => {
-                console.log(data)
+                setShow(true);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error(error);
             });
     }
 
@@ -57,23 +47,8 @@ export default function Profile() {
         if (clicked) {
             document.getElementById(id1).style.visibility = "visible";
             document.getElementById(id2).style.visibility = "hidden";
-            setClicked(false)
-            var body={}
-            body['first_name'] = document.getElementById('first_name').value
-            body['last_name'] = document.getElementById('last_name').value
-            body['gender'] = document.getElementById('gender').value
-            body['email'] = document.getElementById('email').value
-            body['phone'] = document.getElementById('phone').value
-            body['area_code'] = document.getElementById('area_code').value
-            body['id'] = userDetails.username
-            body['dob'] = document.getElementById('dob').value
-            body['height'] = document.getElementById('height').value
-            body['weight'] = document.getElementById('weight').value
-            body['blood_type'] = document.getElementById('blood_type').value
-            // body['ailments'] = document.getElementById('ailments').value
-            // body['med'] = document.getElementById('med').value
-            console.log(body)
-            awsCall(body)
+            setClicked(false);
+            awsCall(values);
         } else {
             document.getElementById(id1).style.visibility = "hidden";
             document.getElementById(id2).style.visibility = "visible";
@@ -83,15 +58,37 @@ export default function Profile() {
 
     const [values, setValues] = useState({
         weight: '',
-        age: ''
+        first_name: '',
+        last_name: '',
+        gender: '',
+        email: '',
+        phone: '',
+        area_code: '',
+        id: userDetails.username,
+        dob: '',
+        height: '',
+        blood_type: '',
     });
 
     const handleChange = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value});
     };
 
+    const [show, setShow] = useState(false);
+
     return (
         <Container maxWidth="xs">
+            <Snackbar
+                autoHideDuration={3000}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
+                open={show}
+                onClose={() => setShow(false)}
+                message="Data Updated Successfully"
+                key={'topright'}
+            />
             <Row>
                 <Col md={6} xs={6}>
                     <Typography color="text.secondary" style={{padding: '10px'}}>About You</Typography>
@@ -105,17 +102,19 @@ export default function Profile() {
             </Row>
             <FormControl sx={{width: '100%'}}>
                 <TextField size="small" id="first_name" label="First Name" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1}/>
+                           value={values['first_name']}
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('first_name')}/>
                 <TextField size="small" id="last_name" label="Last Name" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1}/>
+                           value={values['last_name']}
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('last_name')}/>
                 <FormControl fullWidth size={'small'} style={{paddingBottom: '10px'}}>
                     <InputLabel id="gender">Gender</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={values.age}
-                        label="Age"
-                        onChange={handleChange('age')}
+                        value={values.gender}
+                        label="Gender"
+                        onChange={handleChange('gender')}
                         disabled={!clicked1}
                     >
                         <MenuItem value='m'>Male</MenuItem>
@@ -126,9 +125,9 @@ export default function Profile() {
                 <TextField size="small" id="email" label="Email" variant="outlined" disabled
                            style={{paddingBottom: '10px'}} value={userDetails.attributes.email}/>
                 <TextField size="small" id="phone" label="Phone Number" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1}/>
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('phone')}/>
                 <TextField size="small" id="area_code" label="Area Code" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1}/>
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('area_code')}/>
             </FormControl>
             <br/>
             <br/>
