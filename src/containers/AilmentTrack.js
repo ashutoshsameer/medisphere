@@ -16,7 +16,7 @@ export default function AilmentTrack(props) {
             .then(res => res.json())
             .then(res => setRange(res))
             .catch(error => console.error(error));
-    }, []);
+    }, [userDetails.username]);
 
     const [data, setData] = useState([]);
 
