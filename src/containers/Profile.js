@@ -134,19 +134,19 @@ export default function Profile() {
                 </Row>
             </FormControl>
 
-            <br/>
-            <br/>
-            <Row>
-                <Col md={6}>
-                    <Typography color="text.secondary" style={{padding: '10px'}}>Health History</Typography>
-                </Col>
-            </Row>
-            <FormControl sx={{width: '100%'}}>
-                <TextField size="small" id="outlined-basic" label="Ailments" variant="outlined"
-                           style={{paddingBottom: '10px'}}/>
-                <TextField size="small" id="outlined-basic" label="Medication" variant="outlined"
-                           style={{paddingBottom: '10px'}}/>
-            </FormControl>
+            {/*<br/>*/}
+            {/*<br/>*/}
+            {/*<Row>*/}
+            {/*    <Col md={6}>*/}
+            {/*        <Typography color="text.secondary" style={{padding: '10px'}}>Health History</Typography>*/}
+            {/*    </Col>*/}
+            {/*</Row>*/}
+            {/*<FormControl sx={{width: '100%'}}>*/}
+            {/*    <TextField size="small" id="outlined-basic" label="Ailments" variant="outlined"*/}
+            {/*               style={{paddingBottom: '10px'}}/>*/}
+            {/*    <TextField size="small" id="outlined-basic" label="Medication" variant="outlined"*/}
+            {/*               style={{paddingBottom: '10px'}}/>*/}
+            {/*</FormControl>*/}
 
         </Container>
     );
