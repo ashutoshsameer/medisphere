@@ -112,7 +112,7 @@ export default function Profile() {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={values.gender}
+                        value={values['gender']}
                         label="Gender"
                         onChange={handleChange('gender')}
                         disabled={!clicked1}
@@ -125,9 +125,9 @@ export default function Profile() {
                 <TextField size="small" id="email" label="Email" variant="outlined" disabled
                            style={{paddingBottom: '10px'}} value={userDetails.attributes.email}/>
                 <TextField size="small" id="phone" label="Phone Number" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('phone')}/>
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} value={values['phone']} onChange={handleChange('phone')}/>
                 <TextField size="small" id="area_code" label="Area Code" variant="outlined"
-                           style={{paddingBottom: '10px'}} disabled={!clicked1} onChange={handleChange('area_code')}/>
+                           style={{paddingBottom: '10px'}} disabled={!clicked1} value={values['area_code']} onChange={handleChange('area_code')}/>
             </FormControl>
             <br/>
             <br/>
@@ -145,23 +145,23 @@ export default function Profile() {
             <FormControl sx={{width: '100%'}}>
                 <Row>
                     <Col md={6} xs={6}>
-                        <TextField size="small" id="dob" label="Date of Birth" variant="outlined"
-                                   style={{paddingBottom: '10px'}} disabled={!clicked2}/>
+                        <TextField size="small" id="dob" label="Date of Birth" variant="outlined" value={values['dob']}
+                                   style={{paddingBottom: '10px'}} disabled={!clicked2} onChange={handleChange('dob')}/>
                     </Col>
                     <Col md={6} xs={6}>
-                        <TextField size="small" id="blood_type" label="Blood Type" variant="outlined"
+                        <TextField size="small" id="blood_type" label="Blood Type" variant="outlined" onChange={handleChange('blood_type')} value={values['blood_type']}
                                    style={{paddingBottom: '10px'}} disabled={!clicked2}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6} xs={6}>
-                        <TextField size="small" id="height" label="Height" variant="outlined"
+                        <TextField size="small" id="height" label="Height" variant="outlined" onChange={handleChange('height')} value={values['height']}
                                    style={{paddingBottom: '10px'}} disabled={!clicked2} InputProps={{
                             endAdornment: <InputAdornment position="end">cm</InputAdornment>,
                         }}/>
                     </Col>
                     <Col md={6} xs={6}>
-                        <TextField size="small" id="weight" label="Weight" variant="outlined"
+                        <TextField size="small" id="weight" label="Weight" variant="outlined" onChange={handleChange('weight')} value={values['weight']}
                                    style={{paddingBottom: '10px'}} disabled={!clicked2} InputProps={{
                             endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                         }}/>
