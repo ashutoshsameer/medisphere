@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import LineChart from "../charts/LineChart";
 import moment from "moment";
 import DateAdapter from '@mui/lab/AdapterMoment';
@@ -9,8 +9,14 @@ import {Button, TextField} from "@mui/material";
 import {useAppContext} from "../lib/contextLib";
 
 export default function AilmentTrack(props) {
-
     const {userDetails} = useAppContext();
+    const [range, setRange] = useState([]);
+    useEffect(() => {
+        fetch(`https://p58nhtnt9j.execute-api.us-east-1.amazonaws.com/v1/range?user_id=${userDetails.username}`)
+            .then(res => res.json())
+            .then(res => setRange(res))
+            .catch(error => console.error(error));
+    }, []);
 
     const [data, setData] = useState([]);
 
@@ -35,6 +41,8 @@ export default function AilmentTrack(props) {
     return (
         <div>
             <h5>{props.match.params.name}</h5>
+
+            <p>{range.length > 0 ? `Tracking from ${moment(range[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")} till ${moment(range[1], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")}` : null}</p>
             <br/>
             <Row>
                 <Col md={3} xs={12}>
