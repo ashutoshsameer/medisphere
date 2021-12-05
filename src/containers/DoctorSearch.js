@@ -34,7 +34,7 @@ export default function DoctorSearch() {
         setOpen(true);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                awsCall(position.coords.latitude, position.coords.longitude, searchString, "500km")
+                awsCall(position.coords.latitude, position.coords.longitude, searchString, "100km")
             }, function (position) {
                 awsCall(43.295, -75.577, searchString, "100km")
             });
