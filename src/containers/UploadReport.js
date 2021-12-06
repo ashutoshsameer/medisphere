@@ -59,19 +59,28 @@ export default function UploadReport() {
     const { userDetails } = useAppContext();
 
     function handleUpload(event) {
-        console.log(userDetails.username);
+        console.log('User', userDetails.username);
         event.preventDefault();
 
         setIsUploading(true);
         const file = myFiles[0];
+        console.log("This is file", file)
         const myHeaders = new Headers();
         const API_GOES_HERE = '';
+        // myHeaders.append("file_name", `${userDetails.username}/${file["name"]}`);
+        myHeaders.append("file_name", `${file["name"]}`);
         myHeaders.append("Content-Type", "application/octet-stream");
-        fetch(`https://${API_GOES_HERE}?name=${file.name.replaceAll(' ', '_')}`, {
+        // myHeaders.append("Accept", "/*/");
+        // myHeaders.append("Access-Control-Allow-Origin","*");
+        
+        console.log(myHeaders)
+        // fetch(`https://${API_GOES_HERE}?name=${file.name.replaceAll(' ', '_')}`, {
+        fetch(`https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/file`,{
             body: file,
             headers: myHeaders,
             method: "PUT"
         }).then((response) => {
+            console.log(response)
             setIsUploading(false);
             setMyFiles([]);
             setShow(true);
