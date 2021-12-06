@@ -75,6 +75,7 @@ export default function UploadReport() {
             setIsUploading(false);
             setMyFiles([]);
             setShow(true);
+            setReportType('');
         }).catch((error) => {
             setIsUploading(true);
         });
