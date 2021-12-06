@@ -67,8 +67,8 @@ export default function UploadReport() {
         console.log("This is file", file)
         const myHeaders = new Headers();
         const API_GOES_HERE = '';
-        // myHeaders.append("file_name", `${userDetails.username}/${file["name"]}`);
-        myHeaders.append("file_name", `${file["name"]}`);
+        myHeaders.append("file_name", `${userDetails.username}/${file["name"]}`);
+        // myHeaders.append("file_name", `${file["name"]}`);
         myHeaders.append("Content-Type", "application/octet-stream");
         // myHeaders.append("Accept", "/*/");
         // myHeaders.append("Access-Control-Allow-Origin","*");
