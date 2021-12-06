@@ -5,7 +5,7 @@ import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {Col, Row} from "react-bootstrap";
 import {DateTimePicker} from "@mui/lab";
-import {Button, TextField} from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
 import {useAppContext} from "../lib/contextLib";
 
 export default function AilmentTrack(props) {
@@ -42,7 +42,7 @@ export default function AilmentTrack(props) {
         <div>
             <h5>{props.match.params.name}</h5>
 
-            <p>{range.length > 0 ? `Tracking from ${moment(range[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")} till ${moment(range[1], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")}` : null}</p>
+            <p>{range.length > 0 ? `Tracking from ${moment(range[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")} till ${moment(range[1], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")}` : <CircularProgress color="inherit"/>}</p>
             <br/>
             <Row>
                 <Col md={3} xs={12}>

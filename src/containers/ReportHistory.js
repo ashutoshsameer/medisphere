@@ -51,7 +51,7 @@ export default function ReportHistory() {
 
     const transformedFiles = files.map(e => ({
         ...e,
-        dateUploaded: moment(e[2].dateUploaded, "YYYY-MM-DDTHH:mm:ss+-HH:mm").format("MMMM Do YYYY"),
+        dateUploaded: moment(e[2].dateUploaded).format("MMMM Do YYYY"),
         url: e[1],
         name: e[0]
     }));
