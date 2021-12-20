@@ -59,15 +59,15 @@ export default function UploadReport() {
     const { userDetails } = useAppContext();
 
     function handleUpload(event) {
-        console.log(userDetails.username);
         event.preventDefault();
 
         setIsUploading(true);
         const file = myFiles[0];
         const myHeaders = new Headers();
-        const API_GOES_HERE = '';
+        myHeaders.append("file_name", `${userDetails.username}/${file["name"]}`);
         myHeaders.append("Content-Type", "application/octet-stream");
-        fetch(`https://${API_GOES_HERE}?name=${file.name.replaceAll(' ', '_')}`, {
+
+        fetch(`https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/file`,{
             body: file,
             headers: myHeaders,
             method: "PUT"
@@ -75,6 +75,7 @@ export default function UploadReport() {
             setIsUploading(false);
             setMyFiles([]);
             setShow(true);
+            setReportType('');
         }).catch((error) => {
             setIsUploading(true);
         });

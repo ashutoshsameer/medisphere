@@ -6,7 +6,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {Col, Row, Card, ListGroup} from "react-bootstrap";
 import CardMedia from '@mui/material/CardMedia';
 import {DateTimePicker} from "@mui/lab";
-import {Button, TextField} from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
 import {useAppContext} from "../lib/contextLib";
 
 export default function AilmentTrack(props) {
@@ -70,10 +70,11 @@ export default function AilmentTrack(props) {
         <div>
             <h5>{props.match.params.name}</h5>
 
-            <p>{range.length > 0 ? `Tracking from ${moment(range[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")} till ${moment(range[1], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")}` : null}</p>
-            <br/>
+            
             {props.match.params.name !== 'Pneumonia' ?
             <div>
+                <p>{range.length > 0 ? `Tracking from ${moment(range[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")} till ${moment(range[1], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY HH:mm")}` : <CircularProgress color="inherit"/>}</p>
+            <br/>
             <Row>
                 <Col md={3} xs={12}>
                     <LocalizationProvider dateAdapter={DateAdapter}>
