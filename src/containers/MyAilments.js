@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,10 +12,32 @@ import AddIcon from '@material-ui/icons/Add';
 import {Row} from "react-bootstrap";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import './MyAilments.css';
+import {useAppContext} from "../lib/contextLib";
 
 export default function MyAilments() {
     const history = useHistory();
+    const {userDetails} = useAppContext();
     const [reportType, setReportType] = useState('');
+    const [diabetesStart, setDiabetesStart] = useState('');
+
+    const [ailments, setAilments] = useState([]);
+
+    useEffect(() => {
+        fetch(`https://p58nhtnt9j.execute-api.us-east-1.amazonaws.com/v1/range?user_id=${userDetails.username}`)
+            .then(res => res.json())
+            .then(res => {
+                setDiabetesStart(res);
+                setAilments([{
+                    name: 'Diabetes',
+                    otherData: {
+                        addedOn: moment(res[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY")
+                    }
+                }]);
+            })
+            .catch(error => {
+                setDiabetesStart('');
+            });
+    }, [userDetails.username]);
 
     const reportTypes = [
         {
@@ -23,15 +45,6 @@ export default function MyAilments() {
             value: 1
         }
     ];
-
-    const [ailments, setAilments] = useState([
-        {
-            name: 'Diabetes',
-            otherData: {
-                addedOn: moment('11/27/2021', 'MM/DD/YYYY').format("MMMM Do YYYY")
-            }
-        }
-    ]);
 
     function trackAilment(ailment) {
         history.push(`/ailments/${ailment}`);
@@ -76,6 +89,8 @@ export default function MyAilments() {
     function validate() {
         return reportType !== '';
     }
+
+    console.log(diabetesStart);
 
     return (
         <>
