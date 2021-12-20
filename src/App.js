@@ -62,7 +62,7 @@ function App() {
                             });
                     })
                     .catch((error) => console.error(error));
-            }, 10000);
+            }, 60000);
             return () => clearInterval(interval);
         }
     }, [isAuthenticated, userDetails.username]);
