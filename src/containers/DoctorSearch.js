@@ -14,7 +14,7 @@ export default function DoctorSearch() {
     };
 
     function awsCall(lat, lon, searchString, dist) {
-        const headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
+        const headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*"};
         fetch('https://ujap4eccgg.execute-api.us-east-1.amazonaws.com/v1/doctors?lat=' + lat + '&lon=' + lon + '&searchString=' + searchString + '&dist=' + dist,
             {
                 method: 'GET',
