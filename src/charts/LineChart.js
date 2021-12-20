@@ -110,7 +110,6 @@ function LineChart(props) {
                         text={`Glucose Level`}
                         textComponent={TitleText}
                     />
-                    <Animation/>
                 </Chart>
             </Paper>
         </Col>
