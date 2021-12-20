@@ -2,7 +2,7 @@ import React from 'react';
 import './LineChart.css';
 import Paper from '@material-ui/core/Paper';
 import {ArgumentAxis, Chart, LineSeries, Title, Tooltip, ValueAxis} from '@devexpress/dx-react-chart-material-ui';
-import {Animation, ArgumentScale, EventTracker} from '@devexpress/dx-react-chart';
+import {ArgumentScale, EventTracker} from '@devexpress/dx-react-chart';
 import {withStyles} from '@material-ui/core/styles';
 import {Col} from "react-bootstrap";
 import {scaleTime} from 'd3-scale';

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
@@ -14,16 +13,14 @@ import { Row } from "react-bootstrap";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import './MyAilments.css';
 import { useAppContext } from "../lib/contextLib";
-import { TrafficOutlined } from "@material-ui/icons";
-import { assignIn } from "lodash";
 
 export default function MyAilments() {
     const history = useHistory();
     const {userDetails} = useAppContext();
     const [reportType, setReportType] = useState('');
     const [diabetesStart, setDiabetesStart] = useState('');
+    const [fetched, setFetched] = useState(false);
 
-    // const [ailments, setAilments] = useState([]);
     const [ailments, setAilments] = useState([
         {
             name: 'Pneumonia',
@@ -34,28 +31,32 @@ export default function MyAilments() {
     ]);
 
     useEffect(() => {
-        fetch(`https://p58nhtnt9j.execute-api.us-east-1.amazonaws.com/v1/range?user_id=${userDetails.username}`)
-            .then(res => res.json())
-            .then(res => {
-                if (res['errorMessage']) {
+        if (ailments.filter(e => e.name === 'Diabetes').length === 0 && !fetched) {
+            fetch(`https://p58nhtnt9j.execute-api.us-east-1.amazonaws.com/v1/range?user_id=${userDetails.username}`)
+                .then(res => res.json())
+                .then(res => {
+                    if (res['errorMessage']) {
+                        setDiabetesStart('');
+                        setAilments(ailments.filter(e => e.name !== 'Diabetes'));
+                    } else {
+                        setDiabetesStart(res);
+                        ailments.push({
+                            name: 'Diabetes',
+                            otherData: {
+                                addedOn: moment(res[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY")
+                            }
+                        });
+                        setAilments(ailments);
+                    }
+                    setFetched(true)
+                })
+                .catch(error => {
                     setDiabetesStart('');
                     setAilments(ailments.filter(e => e.name !== 'Diabetes'));
-                } else {
-                    setDiabetesStart(res);
-                    ailments.push({
-                        name: 'Diabetes',
-                        otherData: {
-                            addedOn: moment(res[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY")
-                        }
-                    });
-                    setAilments(ailments);
-                }
-            })
-            .catch(error => {
-                setDiabetesStart('');
-                setAilments(ailments.filter(e => e.name !== 'Diabetes'));
-            });
-    }, [userDetails.username]);
+                    setFetched(true)
+                });
+        }
+    }, [userDetails.username, ailments, fetched]);
 
     const reportTypes = [
         {
