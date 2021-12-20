@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-kinesis": "^3.6.1",
     "@aws-sdk/client-opensearch": "^3.43.0",
     "@date-io/moment": "^2.11.0",
     "@devexpress/dx-react-chart": "^2.7.6",
@@ -22,6 +23,7 @@
     "d3": "^7.1.1",
     "d3-scale": "^4.0.2",
     "lodash": "^4.17.21",
+    "mocker-data-generator": "^2.12.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0",

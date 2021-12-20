@@ -10,7 +10,7 @@ export default function Profile() {
     const [clicked1, setClicked1] = useState(false);
     const [clicked2, setClicked2] = useState(false);
 
-    const {userDetails} = useAppContext();
+    const {userDetails, setUserProfile} = useAppContext();
 
     useEffect(() => {
         const headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
@@ -21,7 +21,9 @@ export default function Profile() {
             })
             .then(data => data.json())
             .then(data => {
+                data['id'] = userDetails.username;
                 setValues(data);
+                setUserProfile(data);
             })
             .catch((error) => console.error(error));
     }, [userDetails.username]);

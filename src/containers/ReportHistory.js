@@ -7,15 +7,11 @@ import moment from 'moment';
 import {useAppContext} from "../lib/contextLib";
 
 export default function ReportHistory() {
-    useEffect(() => {
-        onLoad();
-    }, []);
 
     const { userDetails } = useAppContext();
     const [files,setFiles] = useState([]);
 
-    function onLoad() {
-        console.log('User', userDetails.username);
+    useEffect(() => {
         const myHeaders = new Headers();
         myHeaders.append("userid", userDetails.username);
         myHeaders.append("Content-Type", "application/json");
@@ -32,7 +28,8 @@ export default function ReportHistory() {
         }).catch((error) => {
             console.log(error)
         });
-    }
+    }, [userDetails.username]);
+
     // const files = [
     //     {
     //         url: '',
