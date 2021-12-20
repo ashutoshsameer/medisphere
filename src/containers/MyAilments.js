@@ -26,16 +26,22 @@ export default function MyAilments() {
         fetch(`https://p58nhtnt9j.execute-api.us-east-1.amazonaws.com/v1/range?user_id=${userDetails.username}`)
             .then(res => res.json())
             .then(res => {
-                setDiabetesStart(res);
-                setAilments([{
-                    name: 'Diabetes',
-                    otherData: {
-                        addedOn: moment(res[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY")
-                    }
-                }]);
+                if (res['errorMessage']) {
+                    setDiabetesStart('');
+                    setAilments(ailments.filter(e => e.name !== 'Diabetes'));
+                } else {
+                    setDiabetesStart(res);
+                    setAilments([{
+                        name: 'Diabetes',
+                        otherData: {
+                            addedOn: moment(res[0], 'YYYY-MM-DD HH:mm:ss').format("MMMM Do YYYY")
+                        }
+                    }]);
+                }
             })
             .catch(error => {
                 setDiabetesStart('');
+                setAilments(ailments.filter(e => e.name !== 'Diabetes'));
             });
     }, [userDetails.username]);
 
